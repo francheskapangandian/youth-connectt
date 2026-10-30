@@ -1,0 +1,2143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YOUTHCONNECT - Rizal Local Youth Development Office (LYDO)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Inter & Outfit -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            },
+            rizal: {
+              navy: '#002B49',
+              blue: '#005691',
+              gold: '#E5A93C',
+              purple: '#6C5CE7',
+              light: '#f8fafc'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Outfit', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-heading { font-family: 'Outfit', sans-serif; }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(229, 231, 235, 0.8);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    .ai-glow {
+      box-shadow: 0 0 18px rgba(108, 92, 231, 0.25);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col custom-scrollbar">
+
+  <!-- ================= TOP NAVIGATION BAR ================= -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Logo & Local Tag -->
+      <div class="flex items-center gap-3 cursor-pointer" onclick="switchMainTab('home')">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rizal-navy to-rizal-blue flex items-center justify-center text-rizal-gold font-black text-xl shadow-md border border-rizal-gold/40">
+          YC
+        </div>
+        <div>
+          <span class="font-heading font-extrabold text-xl tracking-tight text-slate-900">YOUTH<span class="text-rizal-blue">CONNECT</span></span>
+          <span class="block text-[10px] uppercase font-bold tracking-widest text-slate-500">Rizal Local Youth Development Office (LYDO)</span>
+        </div>
+      </div>
+
+      <!-- Main Navigation Links (Tab Switcher) -->
+      <nav class="hidden lg:flex items-center gap-1 text-xs font-bold text-slate-600">
+        <button onclick="switchMainTab('home')" id="tab-btn-home" class="nav-tab-btn px-3 py-2 rounded-xl text-emerald-700 bg-emerald-50 transition">Home</button>
+        <button onclick="switchMainTab('opportunities')" id="tab-btn-opportunities" class="nav-tab-btn px-3 py-2 rounded-xl hover:text-emerald-600 hover:bg-slate-100 transition">Opportunities</button>
+        <button onclick="switchMainTab('training')" id="tab-btn-training" class="nav-tab-btn px-3 py-2 rounded-xl hover:text-emerald-600 hover:bg-slate-100 transition">Training & Mentorship</button>
+        <button onclick="switchMainTab('youth-orgs')" id="tab-btn-youth-orgs" class="nav-tab-btn px-3 py-2 rounded-xl hover:text-emerald-600 hover:bg-slate-100 transition">Youth Orgs</button>
+        <button onclick="switchMainTab('my-applications')" id="tab-btn-my-applications" class="nav-tab-btn px-3 py-2 rounded-xl hover:text-emerald-600 hover:bg-slate-100 transition flex items-center gap-1">
+          <span>My Applications</span>
+          <span id="navAppBadgeCount" class="bg-emerald-600 text-white text-[10px] px-1.5 py-0.2 rounded-full">1</span>
+        </button>
+        <button onclick="switchMainTab('community')" id="tab-btn-community" class="nav-tab-btn px-3 py-2 rounded-xl hover:text-emerald-600 hover:bg-slate-100 transition">Events</button>
+        <button onclick="switchMainTab('survey')" id="tab-btn-survey" class="nav-tab-btn px-3 py-2 rounded-xl hover:text-emerald-600 hover:bg-slate-100 transition">Feedback</button>
+      </nav>
+
+      <!-- Right Action Items (AI Match Button, Profile & Admin Lock) -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- AI Profiler Trigger Button -->
+        <button onclick="openAIMatcherModal()" class="px-3 py-2 rounded-xl bg-gradient-to-r from-rizal-purple to-rizal-blue text-white font-bold text-xs flex items-center gap-1.5 shadow-md hover:shadow-lg transition">
+          <i class="fa-solid fa-wand-magic-sparkles text-rizal-gold animate-pulse"></i>
+          <span class="hidden sm:inline">AI Skill Matcher</span>
+        </button>
+
+        <!-- Bookmark Counter Trigger -->
+        <button onclick="toggleBookmarksDrawer()" class="relative p-2 rounded-xl border border-slate-200 hover:border-slate-300 text-slate-600 hover:bg-slate-100 transition" title="Saved Items">
+          <i class="fa-solid fa-bookmark text-amber-500"></i>
+          <span id="bookmarkCountBadge" class="absolute -top-1.5 -right-1.5 bg-emerald-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">0</span>
+        </button>
+
+        <!-- Profile Button -->
+        <button onclick="openProfileModal()" class="flex items-center gap-2 bg-slate-100 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 px-2.5 py-1.5 rounded-xl transition">
+          <div class="w-7 h-7 rounded-full bg-emerald-600 text-white font-black text-xs flex items-center justify-center" id="navAvatarInitials">
+            JD
+          </div>
+          <div class="text-left hidden xl:block">
+            <span class="block text-xs font-bold text-slate-900 leading-tight" id="navUserName">Juan Dela Cruz</span>
+            <span class="block text-[10px] text-emerald-700 font-semibold" id="navUserBadge">Rizal Student</span>
+          </div>
+        </button>
+
+        <!-- Admin Lock Button -->
+        <button onclick="handleAdminAccess()" class="bg-slate-900 hover:bg-slate-800 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition">
+          <i class="fa-solid fa-lock text-xs text-amber-400" id="adminLockIcon"></i>
+          <span class="hidden sm:inline">Admin</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Sub-Navigation -->
+    <div class="flex lg:hidden overflow-x-auto px-4 py-2 border-t border-slate-100 bg-slate-50 gap-2 text-xs font-bold whitespace-nowrap custom-scrollbar">
+      <button onclick="switchMainTab('home')" class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white">Home</button>
+      <button onclick="switchMainTab('opportunities')" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700">Opportunities</button>
+      <button onclick="switchMainTab('training')" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700">Mentorship</button>
+      <button onclick="switchMainTab('youth-orgs')" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700">Youth Orgs</button>
+      <button onclick="switchMainTab('my-applications')" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700">My Apps</button>
+      <button onclick="switchMainTab('community')" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700">Events</button>
+      <button onclick="switchMainTab('survey')" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700">Feedback</button>
+    </div>
+  </header>
+
+  <!-- ================= ANNOUNCEMENT TICKER BANNER ================= -->
+  <div class="bg-slate-900 border-b border-slate-800 text-slate-200 text-xs py-2 px-4 overflow-hidden">
+    <div class="max-w-7xl mx-auto flex items-center gap-3">
+      <span class="bg-rizal-gold text-slate-900 font-extrabold text-[10px] px-2 py-0.5 rounded uppercase tracking-wider shrink-0 flex items-center gap-1">
+        <i class="fa-solid fa-bullhorn"></i> Official Advisory
+      </span>
+      <div class="truncate font-medium text-slate-300">
+        Applications for Rizal Municipal Tertiary Scholarship, Provincial Grants, and GIP 2026 are officially open under Rizal LYDO!
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MAIN CONTENT VIEWS WRAPPER ================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+
+    <!-- ================= VIEW 1: HOME ================= -->
+    <div id="view-home" class="tab-view space-y-12">
+      
+      <!-- Hero Banner & AI Skill Match Card -->
+      <section class="bg-gradient-to-br from-rizal-navy via-slate-900 to-rizal-blue text-white rounded-3xl p-6 sm:p-10 relative overflow-hidden shadow-2xl border border-slate-800">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#E5A93C_1px,transparent_1px)] [background-size:18px_18px]"></div>
+        
+        <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+          <!-- Hero Text -->
+          <div class="max-w-2xl text-center lg:text-left space-y-4">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-semibold">
+              <i class="fa-solid fa-graduation-cap"></i> Rizal Local Youth Development Office Portal
+            </div>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+              Empowering Novo Ecijano & Rizal Youth Through Opportunities
+            </h1>
+            <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+              Explore municipal scholarships, government internships, leadership fellowships, and NYC-YORP accredited youth organizations matched dynamically to your skill set.
+            </p>
+
+            <div class="pt-2 flex flex-wrap justify-center lg:justify-start gap-3">
+              <button onclick="switchMainTab('opportunities')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-5 py-3 rounded-xl transition shadow-lg flex items-center gap-2">
+                <i class="fa-solid fa-briefcase"></i> Explore Opportunities
+              </button>
+              <button onclick="openAIMatcherModal()" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold text-xs px-5 py-3 rounded-xl transition flex items-center gap-2">
+                <i class="fa-solid fa-wand-magic-sparkles text-rizal-gold"></i> Run AI Match Profiler
+              </button>
+            </div>
+          </div>
+
+          <!-- Dynamic AI Skill Matcher Highlight Card -->
+          <div class="glass-card bg-slate-900/85 border-slate-700/80 p-6 rounded-2xl w-full lg:w-80 text-center shadow-xl ai-glow">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[10px] font-extrabold uppercase tracking-wider text-rizal-gold bg-rizal-gold/10 px-2.5 py-1 rounded-full border border-rizal-gold/30">
+                <i class="fa-solid fa-brain mr-1"></i> AI Match Score
+              </span>
+              <span class="text-xs text-emerald-400 font-bold" id="heroMatchOverallTag">High Fit</span>
+            </div>
+
+            <div class="relative w-20 h-20 mx-auto mb-3">
+              <div class="w-full h-full rounded-full bg-gradient-to-tr from-rizal-purple to-emerald-500 p-1 flex items-center justify-center">
+                <div class="w-full h-full bg-slate-900 rounded-full flex items-center justify-center flex-col">
+                  <span class="font-black text-2xl text-white" id="heroMatchPercentage">96%</span>
+                  <span class="text-[9px] text-slate-400 font-bold">COMPATIBLE</span>
+                </div>
+              </div>
+            </div>
+
+            <h3 class="font-bold text-base text-white" id="heroProfileName">Juan Dela Cruz</h3>
+            <p class="text-xs text-emerald-400 font-medium mb-3" id="heroProfileDegree">Student & Youth Leader</p>
+            
+            <div class="bg-slate-950/80 rounded-xl p-3 text-xs border border-slate-800 text-left space-y-2 mb-4">
+              <div class="text-[11px] text-slate-300">
+                <span class="text-slate-400">Top Matched Skills:</span>
+                <div class="flex flex-wrap gap-1 mt-1" id="heroMatchedSkillsTags">
+                  <span class="bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] px-2 py-0.5 rounded">Marketing</span>
+                  <span class="bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] px-2 py-0.5 rounded">Youth Leadership</span>
+                </div>
+              </div>
+            </div>
+
+            <button onclick="openAIMatcherModal()" class="w-full bg-gradient-to-r from-rizal-purple to-rizal-blue text-white text-xs font-bold py-2.5 rounded-xl transition shadow-md">
+              Update Skills & Recalculate
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Quick Links -->
+      <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass-card rounded-2xl p-6 border border-slate-200 shadow-sm flex items-start gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xl shrink-0">
+            <i class="fa-solid fa-award"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-base">Scholarships & Grants</h3>
+            <p class="text-xs text-slate-600 mt-1">Access Rizal Municipal Scholarships, Educational Assistance, and LGU Youth Grants.</p>
+            <button onclick="switchMainTab('opportunities')" class="mt-3 text-xs font-bold text-emerald-600 hover:underline inline-flex items-center gap-1">Browse Scholarships &rarr;</button>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 border border-slate-200 shadow-sm flex items-start gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xl shrink-0">
+            <i class="fa-solid fa-users-gear"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-base">Youth Organizations</h3>
+            <p class="text-xs text-slate-600 mt-1">Join accredited groups like MAD Movement, KNY Rizal, Pinas Forward, and Kaya Natin Academy.</p>
+            <button onclick="switchMainTab('youth-orgs')" class="mt-3 text-xs font-bold text-blue-600 hover:underline inline-flex items-center gap-1">Explore Youth Orgs &rarr;</button>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 border border-slate-200 shadow-sm flex items-start gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center font-bold text-xl shrink-0">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-base">Training & Mentorship</h3>
+            <p class="text-xs text-slate-600 mt-1">Complete Sakto Skills Serye (SSS) modules and chat live with specialized youth mentors.</p>
+            <button onclick="switchMainTab('training')" class="mt-3 text-xs font-bold text-purple-600 hover:underline inline-flex items-center gap-1">Access Mentorship &rarr;</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ================= VIEW 2: OPPORTUNITIES ================= -->
+    <div id="view-opportunities" class="tab-view hidden space-y-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 text-emerald-600 font-bold text-xs uppercase tracking-widest">
+            <i class="fa-solid fa-briefcase"></i> Real Listings & Grants
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
+            Opportunities Hub
+          </h2>
+          <p class="text-slate-600 text-sm mt-1">
+            Browse verified scholarships, internships, and seminars under Rizal LYDO.
+          </p>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="filterOpportunities('ALL')" class="opp-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-sm transition" data-cat="ALL">All Listings</button>
+          <button onclick="filterOpportunities('SCHOLARSHIP')" class="opp-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition" data-cat="SCHOLARSHIP">Scholarships</button>
+          <button onclick="filterOpportunities('INTERNSHIP')" class="opp-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition" data-cat="INTERNSHIP">Internships</button>
+          <button onclick="filterOpportunities('SEMINAR')" class="opp-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition" data-cat="SEMINAR">Seminars</button>
+        </div>
+      </div>
+
+      <!-- Opportunities Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="opportunitiesContainer">
+        <!-- Rendered Dynamically via JS -->
+      </div>
+    </div>
+
+    <!-- ================= VIEW 3: TRAINING & MENTORSHIP ================= -->
+    <div id="view-training" class="tab-view hidden space-y-12">
+      <!-- Course Banner -->
+      <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl relative overflow-hidden">
+        <div class="max-w-3xl mb-8">
+          <span class="bg-emerald-500/20 text-emerald-300 font-bold text-xs uppercase px-3 py-1 rounded-full border border-emerald-500/30">
+            <i class="fa-solid fa-graduation-cap mr-1"></i> Featured Learning Module
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mt-3">
+            Training & Expert Mentorship
+          </h2>
+          <p class="text-slate-300 text-sm mt-2 leading-relaxed">
+            Gain certified skills tailored for youth, students, and young professionals under Rizal LYDO.
+          </p>
+        </div>
+
+        <!-- Featured Module Card: SSS -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur">
+          <div class="lg:col-span-2 space-y-4">
+            <div class="flex items-center gap-3">
+              <span class="bg-emerald-600 text-white text-[10px] font-black px-2.5 py-1 rounded-md uppercase">Certified Course</span>
+              <span class="text-xs text-slate-300"><i class="fa-regular fa-clock text-emerald-400 mr-1"></i> Self-Paced Series</span>
+            </div>
+            <h3 class="text-xl font-bold text-white">SSS (SAKTO SKILLS SERYE)</h3>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Sakto Skills Serye (SSS), a series of short courses aimed at equipping youth like you with just enough skills to help you find a job, pursue that business idea, grab that new opportunity, or develop yourselves further.
+            </p>
+            <div class="space-y-1.5 pt-2">
+              <div class="flex justify-between text-xs text-slate-300">
+                <span>Course Completion Progress:</span>
+                <span class="font-bold text-emerald-400" id="sssCourseProgressText">25% Completed</span>
+              </div>
+              <div class="w-full bg-slate-700 rounded-full h-2">
+                <div class="bg-emerald-500 h-2 rounded-full transition-all duration-500" id="sssProgressBar" style="width: 25%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-3 justify-center">
+            <button onclick="openTrainingModal('SSS (SAKTO SKILLS SERYE)')" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-3 rounded-xl transition shadow-lg flex items-center justify-center gap-2">
+              <i class="fa-solid fa-circle-play text-base"></i> Access Training Module
+            </button>
+            <button onclick="openMentorChatDrawer('SSS Specialist Mentor')" class="w-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs py-2.5 rounded-xl transition border border-white/15 flex items-center justify-center gap-2">
+              <i class="fa-regular fa-comments text-amber-400"></i> Ask SSS Specialist Mentor
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dedicated Mentor Roster -->
+      <div class="space-y-6">
+        <div>
+          <h3 class="text-xl font-extrabold text-slate-900 tracking-tight">Dedicated Youth Mentors Directory</h3>
+          <p class="text-xs text-slate-600 mt-1">Connect directly with specialist mentors across academic, career, and leadership sectors.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="mentorsContainer">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= VIEW 4: YOUTH ORGS ================= -->
+    <div id="view-youth-orgs" class="tab-view hidden space-y-8">
+      <div>
+        <div class="flex items-center gap-2 text-emerald-600 font-bold text-xs uppercase tracking-widest">
+          <i class="fa-solid fa-users"></i> Accredited Directory
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
+          Youth Organizations
+        </h2>
+        <p class="text-slate-600 text-sm mt-1">
+          Connect directly with official youth movements, SK councils, and student advocates under Rizal LYDO.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="youthOrgsContainer">
+        <!-- Rendered Dynamically via JS -->
+      </div>
+    </div>
+
+    <!-- ================= VIEW 5: MY APPLICATIONS ================= -->
+    <div id="view-my-applications" class="tab-view hidden space-y-8">
+      <div>
+        <div class="flex items-center gap-2 text-emerald-600 font-bold text-xs uppercase tracking-widest">
+          <i class="fa-solid fa-file-circle-check"></i> Applicant Dashboard
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
+          My Applications
+        </h2>
+        <p class="text-slate-600 text-sm mt-1">
+          Track the real-time review status of your scholarship, internship, and youth organization applications.
+        </p>
+      </div>
+
+      <div class="glass-card rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+        <div class="p-4 bg-slate-100/80 border-b border-slate-200 flex items-center justify-between text-xs font-bold text-slate-700">
+          <span>Submitted Applications Log</span>
+          <span class="text-slate-500 font-normal">Updated Real-Time</span>
+        </div>
+
+        <div class="divide-y divide-slate-200" id="userApplicationsList">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= VIEW 6: COMMUNITY & EVENTS ================= -->
+    <div id="view-community" class="tab-view hidden space-y-8">
+      <div>
+        <div class="flex items-center gap-2 text-emerald-600 font-bold text-xs uppercase tracking-widest">
+          <i class="fa-solid fa-calendar-days"></i> Youth Gatherings & Forum
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
+          Community, Events & Discussion Forum
+        </h2>
+        <p class="text-slate-600 text-sm mt-1">
+          Participate in youth conventions, ask questions, share updates, and engage in youth discussions under Rizal LYDO.
+        </p>
+      </div>
+
+      <!-- Events Grid Section -->
+      <div>
+        <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-calendar-check text-emerald-600"></i> Upcoming Events
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="glass-card rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-4">
+              <span class="bg-rose-100 text-rose-700 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Youth Summit</span>
+              <span class="text-xs text-slate-500"><i class="fa-solid fa-clock text-slate-400 mr-1"></i> Nov 15, 2026</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-lg mb-2">Rizal Youth Innovation Summit</h3>
+            <p class="text-xs text-slate-600 mb-4">
+              A 1-day convention highlighting youth leadership, marketing innovation, and digital entrepreneurship under Rizal LYDO.
+            </p>
+            <button onclick="registerForEvent('Rizal Youth Innovation Summit')" class="w-full bg-slate-100 hover:bg-emerald-600 hover:text-white text-slate-800 text-xs font-bold py-2.5 rounded-xl transition border border-slate-200">
+              Register for Event
+            </button>
+          </div>
+
+          <div class="glass-card rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-4">
+              <span class="bg-cyan-100 text-cyan-700 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Marketing Forum</span>
+              <span class="text-xs text-slate-500"><i class="fa-solid fa-clock text-slate-400 mr-1"></i> Dec 02, 2026</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-lg mb-2">BAISKLA Youth Marketing Forum</h3>
+            <p class="text-xs text-slate-600 mb-4">
+              Special workshop session tailored for marketing management students, student leaders, and youth business advocates.
+            </p>
+            <button onclick="registerForEvent('BAISKLA Youth Marketing Forum')" class="w-full bg-slate-100 hover:bg-emerald-600 hover:text-white text-slate-800 text-xs font-bold py-2.5 rounded-xl transition border border-slate-200">
+              Register for Event
+            </button>
+          </div>
+
+          <div class="glass-card rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-4">
+              <span class="bg-amber-100 text-amber-700 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Leadership Assembly</span>
+              <span class="text-xs text-slate-500"><i class="fa-solid fa-clock text-slate-400 mr-1"></i> Dec 18, 2026</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-lg mb-2">Municipal Youth Leadership Assembly</h3>
+            <p class="text-xs text-slate-600 mb-4">
+              Annual gathering of youth advocates, student councils, and local leaders for the Municipal Youth Development Plan.
+            </p>
+            <button onclick="registerForEvent('Municipal Youth Leadership Assembly')" class="w-full bg-slate-100 hover:bg-emerald-600 hover:text-white text-slate-800 text-xs font-bold py-2.5 rounded-xl transition border border-slate-200">
+              Register for Event
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- NEW FEATURE: COMMUNITY FORUM & DISCUSSION BOARD -->
+      <div class="space-y-6 pt-4 border-t border-slate-200">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h3 class="text-xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+              <i class="fa-solid fa-comments text-emerald-600"></i> Youth Community Forum
+            </h3>
+            <p class="text-xs text-slate-600 mt-0.5">Post questions, share tips, or discuss youth leadership topics with fellow Rizal advocates.</p>
+          </div>
+          <button onclick="openCreateForumPostModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition shadow-md flex items-center justify-center gap-2 self-start sm:self-auto">
+            <i class="fa-solid fa-pen-to-square"></i> Ask Question / Create Post
+          </button>
+        </div>
+
+        <!-- Forum Feed Filter Tabs -->
+        <div class="flex flex-wrap items-center gap-2 border-b border-slate-200 pb-3 text-xs font-bold">
+          <button onclick="filterForumPosts('ALL')" class="forum-filter-btn px-3 py-1.5 rounded-xl bg-slate-900 text-white shadow-sm transition" data-fcat="ALL">All Topics</button>
+          <button onclick="filterForumPosts('Question')" class="forum-filter-btn px-3 py-1.5 rounded-xl bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition" data-fcat="Question">Questions</button>
+          <button onclick="filterForumPosts('Scholarship Tip')" class="forum-filter-btn px-3 py-1.5 rounded-xl bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition" data-fcat="Scholarship Tip">Scholarship Tips</button>
+          <button onclick="filterForumPosts('Project Idea')" class="forum-filter-btn px-3 py-1.5 rounded-xl bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition" data-fcat="Project Idea">Project Ideas</button>
+        </div>
+
+        <!-- Forum Feed Posts List -->
+        <div class="space-y-4" id="forumPostsFeed">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= VIEW 7: FEEDBACK ================= -->
+    <div id="view-survey" class="tab-view hidden space-y-8">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+        <div class="max-w-2xl">
+          <div class="flex items-center gap-2 text-emerald-600 font-bold text-xs uppercase tracking-widest">
+            <i class="fa-solid fa-comments"></i> Youth Consultation
+          </div>
+          <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mt-1">
+            Youth Consultation & Feedback Survey
+          </h2>
+          <p class="text-slate-600 text-sm mt-1">
+            Help Rizal LYDO and student councils evaluate and improve municipal youth programs.
+          </p>
+        </div>
+
+        <form id="feedbackForm" onsubmit="handleFeedbackSubmit(event)" class="mt-6 space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Full Name</label>
+              <input type="text" id="surveyName" value="Juan Dela Cruz" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">School / Organization</label>
+              <input type="text" id="surveyOrg" value="Rizal Youth Advocate" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Program Evaluation Rating</label>
+            <div class="flex items-center gap-2 text-amber-400 text-xl cursor-pointer" id="starRating">
+              <i class="fa-solid fa-star text-amber-400" data-star="1" onclick="setStarRating(1)"></i>
+              <i class="fa-solid fa-star text-amber-400" data-star="2" onclick="setStarRating(2)"></i>
+              <i class="fa-solid fa-star text-amber-400" data-star="3" onclick="setStarRating(3)"></i>
+              <i class="fa-solid fa-star text-amber-400" data-star="4" onclick="setStarRating(4)"></i>
+              <i class="fa-solid fa-star text-amber-400" data-star="5" onclick="setStarRating(5)"></i>
+              <span class="text-xs text-slate-700 font-bold ml-2" id="starRatingText">5.0 - Excellent</span>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Feedback & Suggestions for Youth Development</label>
+            <textarea id="surveyComments" rows="3" placeholder="Share your suggestions on scholarships, youth webinars, or community projects..." required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
+          </div>
+
+          <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-6 py-3 rounded-xl transition shadow-sm">
+            Submit Consultation Feedback
+          </button>
+        </form>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-slate-900 text-slate-400 text-xs py-10 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white font-black flex items-center justify-center text-sm">YC</div>
+        <div>
+          <span class="font-bold text-white text-sm">YOUTHCONNECT - Rizal LYDO</span>
+          <p class="text-[11px] text-slate-500">Rizal Local Youth Development Office Portal</p>
+        </div>
+      </div>
+      <p>© 2026 YOUTHCONNECT Rizal LYDO. Empowering Youth Leadership & Opportunities.</p>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- MODALS & DRAWERS CONTAINER                                                -->
+  <!-- ========================================================================= -->
+
+  <!-- 1. AI PROFILER & SKILL MATCHER MODAL -->
+  <div id="aiMatcherModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative border border-slate-100 max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <button onclick="closeAIMatcherModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full flex items-center justify-center bg-slate-100">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex items-center gap-2 text-rizal-purple text-xs font-extrabold uppercase tracking-wider mb-1">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> AI Skill Matcher & Profiler
+      </div>
+      <h3 class="text-xl font-bold text-slate-900">Personalize Your AI Match Index</h3>
+      <p class="text-xs text-slate-500 mb-5">Select your current educational background and key skills to recalculate your compatibility across all grants and youth orgs.</p>
+
+      <form onsubmit="handleRecalculateAIMatches(event)" class="space-y-5">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1.5">Educational Background / Status</label>
+          <select id="aiEduStatus" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold focus:ring-2 focus:ring-rizal-purple focus:outline-none bg-white">
+            <option value="College Student">College Student / Tertiary</option>
+            <option value="Senior High School">Senior High School Student</option>
+            <option value="Fresh Graduate">Fresh Graduate / Young Professional</option>
+            <option value="Out of School Youth">Out of School Youth (OSY)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-2">Select Your Top Skills & Focus Areas</label>
+          <div class="flex flex-wrap gap-2" id="aiSkillsCheckboxes">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <div class="bg-purple-50 border border-purple-200 rounded-2xl p-4 text-xs text-purple-900 space-y-1">
+          <div class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-rizal-purple"></i> How AI Scoring Works</div>
+          <p class="text-[11px] leading-relaxed text-purple-800">
+            Our algorithm weights required qualifications, listed skills, educational fit, and organizational focus to compute your instant percentage score (e.g. 96% Match).
+          </p>
+        </div>
+
+        <button type="submit" class="w-full bg-gradient-to-r from-rizal-purple to-rizal-blue hover:from-purple-700 hover:to-blue-700 text-white font-bold text-xs py-3 rounded-xl transition shadow-lg flex items-center justify-center gap-2">
+          <i class="fa-solid fa-rotate text-rizal-gold"></i> Recalculate AI Match Scores
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. AI MATCH ANALYZER MODAL (EXPLAINING INDIVIDUAL MATCH SCORES) -->
+  <div id="aiMatchAnalyzerModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative border border-slate-100">
+      <button onclick="closeAIMatchAnalyzerModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full flex items-center justify-center bg-slate-100">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex items-center gap-2 text-rizal-purple text-xs font-extrabold uppercase tracking-wider mb-1">
+        <i class="fa-solid fa-chart-pie"></i> Match Breakdown Analysis
+      </div>
+      <h3 class="text-xl font-bold text-slate-900" id="analyzerItemTitle">Rizal Municipal Scholarship</h3>
+      <p class="text-xs text-slate-500 mb-4" id="analyzerItemCategory">Scholarship Listing</p>
+
+      <div class="space-y-4 text-xs">
+        <div class="flex items-center justify-between bg-slate-900 text-white p-4 rounded-2xl">
+          <div>
+            <span class="text-[10px] text-slate-400 font-bold uppercase block">Computed Match Rating</span>
+            <span class="text-xs font-medium text-emerald-400">High Compatibility</span>
+          </div>
+          <div class="font-extrabold text-3xl text-rizal-gold" id="analyzerScoreDisplay">96%</div>
+        </div>
+
+        <div class="space-y-2">
+          <div class="font-bold text-slate-800">Skill Alignment Assessment:</div>
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1.5" id="analyzerSkillsList">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <div class="space-y-1">
+          <div class="font-bold text-slate-800">AI Recommendation Note:</div>
+          <p class="text-slate-600 leading-relaxed bg-emerald-50 p-3 rounded-xl border border-emerald-200 text-[11px]" id="analyzerNoteText">
+            Your profile demonstrates strong alignment in key required competencies for this program.
+          </p>
+        </div>
+
+        <button onclick="closeAIMatchAnalyzerModal()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-xl transition mt-2">
+          Close Match Analysis
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. OPPORTUNITY APPLICATION MODAL (WITH FILE UPLOAD PREVIEW) -->
+  <div id="applicationModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative border border-slate-100 max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <button onclick="closeAppModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full flex items-center justify-center bg-slate-100">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex items-center gap-2 text-emerald-600 text-xs font-bold uppercase tracking-wider mb-1">
+        <i class="fa-solid fa-paper-plane"></i> Direct Application
+      </div>
+      <h3 class="text-xl font-bold text-slate-900" id="modalOppTitle">Rizal Municipal Scholarship</h3>
+      <p class="text-xs text-slate-500 mb-4" id="modalOppCategory">Scholarship Listing</p>
+
+      <form id="oppApplicationForm" onsubmit="submitOpportunityApplication(event)" class="space-y-4">
+        <input type="hidden" id="appOppId">
+        
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Applicant Full Name</label>
+          <input type="text" id="appFullName" value="Juan Dela Cruz" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">School / College</label>
+            <input type="text" id="appSchool" value="Rizal Student" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Course & Year</label>
+            <input type="text" id="appCourse" value="Youth Leader / Student" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Contact Email / Phone</label>
+          <input type="text" id="appContact" value="juan.delacruz@rizal.gov.ph" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+        </div>
+
+        <!-- FILE ATTACHMENT UPLOAD -->
+        <div class="bg-slate-50 border-2 border-dashed border-slate-300 rounded-2xl p-4 text-center hover:border-emerald-500 transition">
+          <i class="fa-solid fa-cloud-arrow-up text-2xl text-emerald-600 mb-2"></i>
+          <label class="block text-xs font-bold text-slate-800 cursor-pointer">
+            <span>Upload Requirements & Attachments</span>
+            <input type="file" id="appAttachmentInput" onchange="handleFileSelect(event)" class="hidden" accept=".pdf,.doc,.docx,.png,.jpg">
+          </label>
+          <p class="text-[10px] text-slate-500 mt-1">Upload CV, Transcript, ID, or Endorsement Letter (PDF, PNG, JPG up to 10MB)</p>
+          <div id="fileUploadPreview" class="hidden mt-3 bg-white p-2 rounded-xl border border-slate-200 text-left flex items-center justify-between text-xs">
+            <div class="flex items-center gap-2 truncate">
+              <i class="fa-solid fa-file-lines text-emerald-600"></i>
+              <span id="fileNameDisplay" class="font-bold text-slate-800 truncate">document.pdf</span>
+            </div>
+            <button type="button" onclick="removeAttachment()" class="text-rose-500 hover:text-rose-700 font-bold text-xs"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Statement of Purpose / Remarks</label>
+          <textarea id="appRemarks" rows="2" placeholder="Briefly state why you are applying..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-3 rounded-xl transition shadow-md flex items-center justify-center gap-2">
+          <i class="fa-solid fa-paper-plane"></i> Submit Application to Rizal LYDO
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. YOUTH ORG MEMBERSHIP APPLICATION MODAL -->
+  <div id="orgAppModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative border border-slate-100 max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <button onclick="closeOrgAppModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full flex items-center justify-center bg-slate-100">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex items-center gap-2 text-blue-600 text-xs font-bold uppercase tracking-wider mb-1">
+        <i class="fa-solid fa-users text-blue-600"></i> Organization Membership Application
+      </div>
+      <h3 class="text-xl font-bold text-slate-900" id="orgModalTitle">Join Make A Difference Movement</h3>
+      <p class="text-xs text-slate-500 mb-4" id="orgModalFocus">Youth Empowerment & Community</p>
+
+      <form onsubmit="submitOrgMembershipApplication(event)" class="space-y-4">
+        <input type="hidden" id="orgModalId">
+        
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Applicant Name</label>
+          <input type="text" id="orgAppName" value="Juan Dela Cruz" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Preferred Volunteer Role / Committee</label>
+          <select id="orgAppRole" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white">
+            <option value="General Youth Member">General Youth Member</option>
+            <option value="Community Volunteer">Community Volunteer</option>
+            <option value="Student Advocate">Student Advocate / Representative</option>
+            <option value="Executive Committee Applicant">Executive Committee Applicant</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Attach CV / Proof of Residence or Student ID</label>
+          <input type="file" required class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Why do you wish to join this youth organization?</label>
+          <textarea id="orgAppMotivation" rows="2" placeholder="Share your drive and interest..." required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-3 rounded-xl transition shadow-md flex items-center justify-center gap-2">
+          <i class="fa-solid fa-paper-plane"></i> Submit Membership Application
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 5. ADMIN AUTHENTICATION LOCK MODAL -->
+  <div id="adminLockModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-sm w-full p-6 text-white text-center shadow-2xl relative">
+      <button onclick="closeAdminLockModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="w-14 h-14 bg-amber-500/10 border border-amber-500/30 text-amber-400 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <h3 class="text-xl font-bold text-white">Admin Portal Protection</h3>
+      <p class="text-xs text-slate-400 mt-1 mb-6">Enter official security password to access the Administrative Portal & Application Queue.</p>
+
+      <form onsubmit="verifyAdminPasscode(event)" class="space-y-4">
+        <div>
+          <input type="password" id="adminPasswordInput" placeholder="Enter Security Password" required class="w-full bg-slate-800 border border-slate-700 text-white text-center font-mono text-sm py-3 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none placeholder:text-slate-500">
+        </div>
+        <p class="text-[10px] text-slate-500">Default Passcode: <span class="text-emerald-400 font-mono font-bold">admin123</span></p>
+        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-3 rounded-xl transition shadow-lg">
+          Unlock Admin Portal
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 6. ADMIN CONTROL PORTAL MODAL -->
+  <div id="adminPortalModal" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-5xl w-full p-6 sm:p-8 shadow-2xl relative border border-slate-100 max-h-[90vh] overflow-y-auto custom-scrollbar flex flex-col">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-200 mb-6">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-slate-900 text-emerald-400 flex items-center justify-center font-bold text-lg">
+            <i class="fa-solid fa-user-shield"></i>
+          </div>
+          <div>
+            <h3 class="font-extrabold text-slate-900 text-xl">Admin Control Hub</h3>
+            <p class="text-xs text-slate-500">Manage Youth Opportunities, Review Applications, & Approve/Reject Submissions</p>
+          </div>
+        </div>
+        
+        <div class="flex items-center gap-2">
+          <button onclick="openPostCreationModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition flex items-center gap-2 shadow-sm">
+            <i class="fa-solid fa-plus"></i> Post New Opportunity
+          </button>
+          <button onclick="closeAdminPortalModal()" class="text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full flex items-center justify-center bg-slate-100">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Admin Queue Table -->
+      <div class="space-y-4 flex-1">
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs flex justify-between items-center">
+          <span class="font-bold text-slate-700"><i class="fa-solid fa-filter text-emerald-600 mr-1"></i> Applications Review Queue</span>
+          <span class="text-slate-500">Pending: <span id="pendingAppsCount" class="font-bold text-slate-800">0</span></span>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-slate-200">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-100 text-slate-600 text-[11px] uppercase font-bold tracking-wider">
+                <th class="p-3.5">Applicant</th>
+                <th class="p-3.5">Opportunity / Org</th>
+                <th class="p-3.5">Attachment</th>
+                <th class="p-3.5">Status</th>
+                <th class="p-3.5 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminAppsTableBody" class="divide-y divide-slate-200 text-xs">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. ADMIN POST CREATION MODAL -->
+  <div id="adminPostCreateModal" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative border border-slate-100 max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <button onclick="closePostCreationModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full flex items-center justify-center bg-slate-100">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex items-center gap-2 text-emerald-600 text-xs font-bold uppercase tracking-wider mb-1">
+        <i class="fa-solid fa-plus-circle"></i> Create New Listing
+      </div>
+      <h3 class="text-xl font-bold text-slate-900 mb-4">Publish Opportunity / Youth Program</h3>
+
+      <form onsubmit="handleCreateNewPost(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Category</label>
+          <select id="postCategorySelect" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white">
+            <option value="SCHOLARSHIP">Scholarship Grant</option>
+            <option value="INTERNSHIP">Internship Program</option>
+            <option value="SEMINAR">Seminar / Workshop</option>
+            <option value="YOUTH_ORG">Accredited Youth Organization</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Title / Organization Name</label>
+          <input type="text" id="postTitleInput" placeholder="e.g. Rizal Municipal Youth Leadership Grant" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Location / Office</label>
+            <input type="text" id="postLocationInput" placeholder="Rizal Municipal Hall" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Deadline / Date</label>
+            <input type="text" id="postDeadlineInput" placeholder="Dec 31, 2026" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Description & Requirements</label>
+          <textarea id="postDescriptionInput" rows="3" placeholder="Provide full details and eligibility criteria..." required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-3 rounded-xl transition shadow-md flex items-center justify-center gap-2">
+          <i class="fa-solid fa-paper-plane"></i> Publish Listing Immediately
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 8. DIFFERENTIATED MENTOR & ORG LIVE CHAT DRAWER -->
+  <div id="mentorChatDrawer" class="fixed inset-y-0 right-0 z-50 w-full sm:w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col border-l border-slate-200">
+    <div class="p-4 bg-slate-900 text-white flex items-center justify-between border-b border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-emerald-600 flex items-center justify-center font-bold text-sm" id="chatTargetAvatar">
+          <i class="fa-solid fa-comments"></i>
+        </div>
+        <div>
+          <h4 class="font-bold text-xs text-white" id="chatTargetName">MAD Movement Advocate</h4>
+          <span class="text-[10px] text-emerald-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Online & Active</span>
+        </div>
+      </div>
+      <button onclick="closeMentorChatDrawer()" class="text-slate-400 hover:text-white p-1">
+        <i class="fa-solid fa-xmark text-base"></i>
+      </button>
+    </div>
+
+    <!-- Chat Messages Feed -->
+    <div class="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-50 text-xs custom-scrollbar" id="mentorChatMessages">
+      <div class="bg-emerald-100 text-emerald-900 p-3 rounded-2xl rounded-tl-none max-w-[85%] font-medium" id="chatInitialGreeting">
+        Hello! How can our mentor team assist you today?
+      </div>
+    </div>
+
+    <!-- Chat Input Area -->
+    <div class="p-3 bg-white border-t border-slate-200">
+      <form onsubmit="handleSendMentorChat(event)" class="flex items-center gap-2">
+        <input type="text" id="mentorChatInput" placeholder="Type message..." required class="flex-1 px-3.5 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+        <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white p-2.5 rounded-xl transition">
+          <i class="fa-solid fa-paper-plane text-xs"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 9. SAVED BOOKMARKS DRAWER -->
+  <div id="bookmarksDrawer" class="fixed inset-y-0 right-0 z-50 w-full sm:w-80 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col border-l border-slate-200">
+    <div class="p-4 bg-slate-900 text-white flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-bookmark text-amber-400"></i>
+        <h4 class="font-bold text-sm">Saved Opportunities</h4>
+      </div>
+      <button onclick="toggleBookmarksDrawer()" class="text-slate-400 hover:text-white">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="flex-1 p-4 overflow-y-auto space-y-3 custom-scrollbar" id="bookmarksContainer">
+      <!-- Rendered via JS -->
+    </div>
+  </div>
+
+  <!-- 10. PROFILE EDIT MODAL -->
+  <div id="profileModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative border border-slate-100">
+      <button onclick="closeProfileModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <h3 class="text-lg font-bold text-slate-900 mb-4">Edit Profile Information</h3>
+      <form onsubmit="handleSaveProfile(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Full Name</label>
+          <input type="text" id="editProfileName" value="Juan Dela Cruz" required class="w-full px-3 py-2 rounded-xl border border-slate-300">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">School / University</label>
+          <input type="text" id="editProfileSchool" value="Rizal Student" required class="w-full px-3 py-2 rounded-xl border border-slate-300">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Course & Year Level</label>
+          <input type="text" id="editProfileDegree" value="Youth Student Representative" required class="w-full px-3 py-2 rounded-xl border border-slate-300">
+        </div>
+        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl transition mt-2">
+          Save Profile Updates
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 11. CREATE FORUM POST MODAL -->
+  <div id="createForumPostModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative border border-slate-100">
+      <button onclick="closeCreateForumPostModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full flex items-center justify-center bg-slate-100">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex items-center gap-2 text-emerald-600 text-xs font-bold uppercase tracking-wider mb-1">
+        <i class="fa-solid fa-comment-medical"></i> Rizal Youth Forum
+      </div>
+      <h3 class="text-xl font-bold text-slate-900 mb-4">Start a Community Discussion</h3>
+
+      <form onsubmit="handleCreateForumPost(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Topic Category</label>
+          <select id="forumPostCategory" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white">
+            <option value="Question">General Question</option>
+            <option value="Scholarship Tip">Scholarship Tip</option>
+            <option value="Project Idea">Project / Community Idea</option>
+            <option value="Event Advice">Event Advice</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Discussion Title / Question</label>
+          <input type="text" id="forumPostTitle" placeholder="e.g., What are the main requirements for the Municipal Scholarship?" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Post Description & Details</label>
+          <textarea id="forumPostContent" rows="3" placeholder="Provide background or context for fellow youth members..." required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-3 rounded-xl transition shadow-md flex items-center justify-center gap-2">
+          <i class="fa-solid fa-paper-plane"></i> Publish Thread to Forum
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 12. FORUM THREAD REPLIES DRAWER -->
+  <div id="forumReplyDrawer" class="fixed inset-y-0 right-0 z-50 w-full sm:w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col border-l border-slate-200">
+    <div class="p-4 bg-slate-900 text-white flex items-center justify-between border-b border-slate-800">
+      <div>
+        <h4 class="font-bold text-xs text-white" id="drawerThreadTitle">Thread Replies</h4>
+        <span class="text-[10px] text-emerald-400">Community Discussion</span>
+      </div>
+      <button onclick="closeForumReplyDrawer()" class="text-slate-400 hover:text-white p-1">
+        <i class="fa-solid fa-xmark text-base"></i>
+      </button>
+    </div>
+
+    <!-- Active Discussion Summary -->
+    <div class="p-4 bg-slate-100 border-b border-slate-200 text-xs space-y-1">
+      <div class="font-bold text-slate-900" id="drawerMainPostTitle">Main Question Title</div>
+      <p class="text-slate-600 text-[11px]" id="drawerMainPostAuthor">By Author</p>
+    </div>
+
+    <!-- Thread Comments Stream -->
+    <div class="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-50 text-xs custom-scrollbar" id="forumCommentsList">
+      <!-- Rendered via JS -->
+    </div>
+
+    <!-- Write Reply Form -->
+    <div class="p-3 bg-white border-t border-slate-200">
+      <form onsubmit="handleSendForumReply(event)" class="flex items-center gap-2">
+        <input type="text" id="forumReplyInput" placeholder="Write a constructive reply..." required class="flex-1 px-3.5 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+        <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white p-2.5 rounded-xl transition">
+          <i class="fa-solid fa-paper-plane text-xs"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- JAVASCRIPT STATE & APPLICATION ENGINE                                     -->
+  <!-- ========================================================================= -->
+  <script>
+    // GLOBAL STATE MANAGEMENT WITH COMMUNITY FORUM ENGINE
+    const state = {
+      adminUnlocked: false,
+      adminPasscode: "admin123",
+      selectedAttachment: null,
+      activeForumThreadId: null,
+      userProfile: {
+        name: "Juan Dela Cruz",
+        school: "Rizal Student",
+        degree: "Youth Student Representative",
+        eduStatus: "College Student",
+        skills: ["Marketing", "Youth Leadership", "Public Speaking", "Civic Advocacy"]
+      },
+      availableSkills: [
+        "Marketing", "Youth Leadership", "Public Speaking", "Civic Advocacy", 
+        "Digital Literacy", "Disability Inclusion", "Financial Literacy", "Agri-Tech"
+      ],
+      bookmarks: [],
+      forumPosts: [
+        {
+          id: "post-1",
+          author: "Maria Clara",
+          role: "SK Chairperson",
+          category: "Scholarship Tip",
+          title: "Tips for preparing your Transcript of Records (TOR) for the Rizal Scholarship?",
+          content: "Make sure to request your official TOR early at the registrar office before the deadline! Also double check that your residency certificate from the Barangay is stamped.",
+          likes: 18,
+          isLiked: false,
+          timestamp: "2 hours ago",
+          replies: [
+            { author: "Juan Dela Cruz", text: "Thanks for this! Is the Barangay Certificate required to be updated this month?", time: "1 hour ago" },
+            { author: "Maria Clara", text: "Yes Juan, preferably issued within the last 3 months!", time: "45 mins ago" }
+          ]
+        },
+        {
+          id: "post-2",
+          author: "Mark Anthony",
+          role: "Student Advocate",
+          category: "Question",
+          title: "Are senior high school graduating students eligible for the Government Internship Program (GIP)?",
+          content: "Hello everyone! Asking if graduating Grade 12 students can apply for the 3-month GIP slot or if it is strictly for tertiary college students?",
+          likes: 12,
+          isLiked: false,
+          timestamp: "5 hours ago",
+          replies: [
+            { author: "Gov. Intern Specialist Mark", text: "Hi Mark! Both SHS graduates and college students are welcome to apply as long as requirements are submitted.", time: "3 hours ago" }
+          ]
+        },
+        {
+          id: "post-3",
+          author: "Kaya Natin Youth",
+          role: "Council Representative",
+          category: "Project Idea",
+          title: "Brainstorming a Municipal Tree Planting & Agri-Tech Workshop for Youth!",
+          content: "We are planning a joint initiative with Bagani Ecijano combining agricultural sustainability and youth volunteerism. What weekend dates work best for students?",
+          likes: 24,
+          isLiked: false,
+          timestamp: "1 day ago",
+          replies: [
+            { author: "Juan Dela Cruz", text: "Saturdays after 2 PM would be great for most students!", time: "18 hours ago" }
+          ]
+        }
+      ],
+      opportunities: [
+        {
+          id: "opp-1",
+          title: "Rizal Municipal Scholarship",
+          category: "SCHOLARSHIP",
+          location: "Rizal Municipal Hall",
+          deadline: "Nov 30, 2026",
+          description: "Financial assistance program for eligible college students under Rizal Municipal Development Program.",
+          requiredSkills: ["Civic Advocacy", "Youth Leadership"],
+          matchScore: 98
+        },
+        {
+          id: "opp-2",
+          title: "Educational Scholarship Grant",
+          category: "SCHOLARSHIP",
+          location: "Provincial Capitol Office",
+          deadline: "Dec 15, 2026",
+          description: "Educational assistance grant for top performing students maintained under Rizal LYDO.",
+          requiredSkills: ["Youth Leadership", "Financial Literacy"],
+          matchScore: 95
+        },
+        {
+          id: "opp-3",
+          title: "Government Internship Program (GIP)",
+          category: "INTERNSHIP",
+          location: "DOLE / Rizal LGU Office",
+          deadline: "Nov 20, 2026",
+          description: "3-month paid internship opportunity for young professionals and graduating students in local government units.",
+          requiredSkills: ["Public Speaking", "Marketing"],
+          matchScore: 94
+        },
+        {
+          id: "opp-4",
+          title: "Inclusive Youth Leadership",
+          category: "SEMINAR",
+          location: "Rizal Community Center",
+          deadline: "Nov 25, 2026",
+          description: "This learning session aims to equip SK officials, SK Pederasyon, LYDC members, LYDOs and staff, youth organizations, student leaders, volunteers, and young people with the knowledge and practical strategies to advance disability inclusion in youth programs, governance, and community development. Together, let's promote accessibility, equity, meaningful participation, and respect for the rights and dignity of young persons with disabilities.",
+          requiredSkills: ["Disability Inclusion", "Civic Advocacy", "Youth Leadership"],
+          matchScore: 96
+        },
+        {
+          id: "opp-5",
+          title: "BAISKLA",
+          category: "SEMINAR",
+          location: "Youth Development Hub",
+          deadline: "Dec 05, 2026",
+          description: "CALLING ALL YOUTH LEADERS AND ADVOCATES! Are you ready to build safer, more inclusive, and discrimination-free spaces for the youth in your community?",
+          requiredSkills: ["Youth Leadership", "Public Speaking"],
+          matchScore: 92
+        },
+        {
+          id: "opp-6",
+          title: "NYC-YORP Webinar",
+          category: "SEMINAR",
+          location: "Virtual Orientation",
+          deadline: "Dec 10, 2026",
+          description: "The National Youth Commission - Youth Organization Registration Program (YORP), established under Republic Act No. 8044, is the official mechanism for registering youth organizations in the Philippines. The webinar aims to raise awareness and promote youth participation by offering guidance on the YORP Online Registration System, covering guidelines, procedures, requirements, benefits, and common applicant concerns, along with success stories of registered organizations.",
+          requiredSkills: ["Digital Literacy", "Civic Advocacy"],
+          matchScore: 89
+        }
+      ],
+      youthOrgs: [
+        {
+          id: "org-1",
+          name: "Make A Difference Movement",
+          acronym: "MAD Movement",
+          focus: "Youth Empowerment & Community",
+          description: "Volunteer network driving impactful youth leadership projects under Rizal LYDO.",
+          members: "450+ Youth Advocates",
+          requiredSkills: ["Youth Leadership", "Civic Advocacy"],
+          matchScore: 97
+        },
+        {
+          id: "org-2",
+          name: "KNY RIZAL",
+          acronym: "KNY Rizal",
+          focus: "Municipal Governance & Culture",
+          description: "Kabataan ng Rizal youth council advocate group fostering local heritage and education.",
+          members: "310+ Members",
+          requiredSkills: ["Youth Leadership", "Civic Advocacy"],
+          matchScore: 98
+        },
+        {
+          id: "org-3",
+          name: "Pinas Forward",
+          acronym: "Pinas Forward",
+          focus: "Digital Literacy & Advocacy",
+          description: "Nationwide movement equipping students with digital skills and active citizenship.",
+          members: "1,200+ Members",
+          requiredSkills: ["Digital Literacy", "Public Speaking"],
+          matchScore: 91
+        },
+        {
+          id: "org-4",
+          name: "Bagani Ecijano",
+          acronym: "Bagani Ecijano",
+          focus: "Agri-Tech & Youth Volunteers",
+          description: "Provincial youth organization advocating for smart agriculture and student leadership.",
+          members: "280+ Members",
+          requiredSkills: ["Agri-Tech", "Civic Advocacy"],
+          matchScore: 88
+        },
+        {
+          id: "org-5",
+          name: "Kaya Natin Academy",
+          acronym: "Kaya Natin",
+          focus: "Leadership & Civic Governance",
+          description: "Oo, tama ang basa mo - babalik ang Kaya Natin Academy for Young Leaders! Babalik nanaman ang pinto para sa mga kabataan! Tara, lumahok tayo at maranasan ang isang makabuluhang paglalakbay sa pamumuno, pakikilahok, at pagbabago! Kung handa kang maging Matino, Mahusay, at May Puso, ito na ang pagkakataon mo.",
+          members: "500+ Alumni Leaders",
+          requiredSkills: ["Youth Leadership", "Public Speaking", "Civic Advocacy"],
+          matchScore: 99
+        }
+      ],
+      mentors: [
+        {
+          id: "mentor-1",
+          name: "Prof. Maria Santos",
+          role: "Academic & Scholarship Consultant",
+          focus: "Rizal Municipal & Tertiary Grants",
+          avatar: "MS",
+          greeting: "Hello Juan! I am Prof. Maria Santos. How can I assist you with your scholarship documents or grade evaluations?"
+        },
+        {
+          id: "mentor-2",
+          name: "Gov. Intern Specialist Mark",
+          role: "DOLE / LGU Career Coach",
+          focus: "Government Internship Program (GIP)",
+          avatar: "MK",
+          greeting: "Magandang araw! Thinking about joining the Government Internship Program? I can guide your deployment requirements."
+        },
+        {
+          id: "mentor-3",
+          name: "Dr. Aris Dela Cruz",
+          role: "Inclusive Leadership Specialist",
+          focus: "Disability Inclusion & Youth Welfare",
+          avatar: "AC",
+          greeting: "Kumusta! Ask me about practical strategies for advancing disability inclusion in youth governance."
+        },
+        {
+          id: "mentor-4",
+          name: "Dir. YORP Officer",
+          role: "NYC-YORP Governance Advisor",
+          focus: "Youth Organization Registration",
+          avatar: "YO",
+          greeting: "Mabuhay! Need help with the NYC YORP Online Registration System and compliance procedures?"
+        },
+        {
+          id: "mentor-5",
+          name: "Coach Paolo Reyes",
+          role: "Business & Marketing Coach",
+          focus: "BAISKLA & Youth Innovation",
+          avatar: "PR",
+          greeting: "Hey Juan! Ready to build discrimination-free business spaces and marketing projects? Let's discuss!"
+        }
+      ],
+      userApplications: [
+        {
+          id: "APP-1001",
+          applicantName: "Juan Dela Cruz",
+          oppTitle: "Rizal Municipal Scholarship",
+          type: "SCHOLARSHIP",
+          school: "Rizal Student",
+          attachmentName: "Juan_DelaCruz_TOR.pdf",
+          status: "PENDING",
+          dateSubmitted: "Just Now"
+        }
+      ]
+    };
+
+    // INITIALIZATION
+    document.addEventListener("DOMContentLoaded", () => {
+      calculateAllAIMatchScores();
+      renderOpportunities("ALL");
+      renderYouthOrgs();
+      renderMentors();
+      renderUserApplications();
+      renderAdminPendingApps();
+      renderBookmarks();
+      renderForumPosts("ALL");
+      setupAISkillsCheckboxes();
+    });
+
+    // COMMUNITY FORUM FUNCTIONS
+    function renderForumPosts(filterCat = "ALL") {
+      const container = document.getElementById("forumPostsFeed");
+      if(!container) return;
+
+      const filtered = filterCat === "ALL" 
+        ? state.forumPosts 
+        : state.forumPosts.filter(p => p.category === filterCat);
+
+      container.innerHTML = "";
+      if(filtered.length === 0) {
+        container.innerHTML = `<div class="p-6 text-center text-slate-400 bg-white rounded-2xl border border-slate-200 text-xs">No forum discussions in this category yet. Be the first to start a thread!</div>`;
+        return;
+      }
+
+      filtered.forEach(post => {
+        const card = document.createElement("div");
+        card.className = "glass-card rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3";
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center">
+                ${post.author.substring(0, 2).toUpperCase()}
+              </div>
+              <div>
+                <h5 class="font-bold text-slate-900 text-xs">${post.author}</h5>
+                <span class="text-[10px] text-slate-500">${post.role} • ${post.timestamp}</span>
+              </div>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase ${getForumCategoryStyle(post.category)}">
+              ${post.category}
+            </span>
+          </div>
+
+          <div>
+            <h4 class="font-bold text-slate-900 text-base mb-1">${post.title}</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">${post.content}</p>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+            <button onclick="toggleLikeForumPost('${post.id}')" class="flex items-center gap-1.5 ${post.isLiked ? 'text-rose-600 font-bold' : 'text-slate-500 hover:text-slate-800'} transition">
+              <i class="${post.isLiked ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+              <span>${post.likes} Upvotes</span>
+            </button>
+
+            <button onclick="openForumReplyDrawer('${post.id}')" class="bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5">
+              <i class="fa-regular fa-comment text-emerald-600"></i>
+              <span>${post.replies.length} Replies</span>
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function getForumCategoryStyle(cat) {
+      switch(cat) {
+        case "Scholarship Tip": return "bg-emerald-100 text-emerald-800";
+        case "Question": return "bg-blue-100 text-blue-800";
+        case "Project Idea": return "bg-purple-100 text-purple-800";
+        default: return "bg-slate-100 text-slate-800";
+      }
+    }
+
+    function filterForumPosts(cat) {
+      document.querySelectorAll(".forum-filter-btn").forEach(btn => {
+        if(btn.dataset.fcat === cat) {
+          btn.className = "forum-filter-btn px-3 py-1.5 rounded-xl bg-slate-900 text-white shadow-sm transition";
+        } else {
+          btn.className = "forum-filter-btn px-3 py-1.5 rounded-xl bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition";
+        }
+      });
+      renderForumPosts(cat);
+    }
+
+    function toggleLikeForumPost(id) {
+      const post = state.forumPosts.find(p => p.id === id);
+      if(post) {
+        if(post.isLiked) {
+          post.likes--;
+          post.isLiked = false;
+        } else {
+          post.likes++;
+          post.isLiked = true;
+        }
+        renderForumPosts();
+      }
+    }
+
+    function openCreateForumPostModal() {
+      document.getElementById("createForumPostModal").classList.remove("hidden");
+    }
+
+    function closeCreateForumPostModal() {
+      document.getElementById("createForumPostModal").classList.add("hidden");
+    }
+
+    function handleCreateForumPost(e) {
+      e.preventDefault();
+      const cat = document.getElementById("forumPostCategory").value;
+      const title = document.getElementById("forumPostTitle").value;
+      const content = document.getElementById("forumPostContent").value;
+
+      const newPost = {
+        id: "post-" + Date.now(),
+        author: state.userProfile.name,
+        role: "Rizal Youth Member",
+        category: cat,
+        title: title,
+        content: content,
+        likes: 1,
+        isLiked: true,
+        timestamp: "Just Now",
+        replies: []
+      };
+
+      state.forumPosts.unshift(newPost);
+      renderForumPosts();
+      closeCreateForumPostModal();
+      document.getElementById("forumPostTitle").value = "";
+      document.getElementById("forumPostContent").value = "";
+      alert("Your discussion thread has been published to the community forum!");
+    }
+
+    function openForumReplyDrawer(id) {
+      state.activeForumThreadId = id;
+      const post = state.forumPosts.find(p => p.id === id);
+      if(!post) return;
+
+      document.getElementById("drawerThreadTitle").innerText = `${post.category} Thread`;
+      document.getElementById("drawerMainPostTitle").innerText = post.title;
+      document.getElementById("drawerMainPostAuthor").innerText = `By ${post.author} • ${post.timestamp}`;
+
+      renderForumComments(post);
+      document.getElementById("forumReplyDrawer").classList.remove("translate-x-full");
+    }
+
+    function closeForumReplyDrawer() {
+      document.getElementById("forumReplyDrawer").classList.add("translate-x-full");
+    }
+
+    function renderForumComments(post) {
+      const container = document.getElementById("forumCommentsList");
+      container.innerHTML = "";
+
+      if(post.replies.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">No replies yet. Start the conversation!</p>`;
+        return;
+      }
+
+      post.replies.forEach(reply => {
+        const div = document.createElement("div");
+        div.className = "bg-white p-3 rounded-2xl border border-slate-200 text-xs space-y-1 shadow-sm";
+        div.innerHTML = `
+          <div class="flex items-center justify-between text-[10px] text-slate-500 font-bold">
+            <span class="text-slate-900">${reply.author}</span>
+            <span>${reply.time}</span>
+          </div>
+          <p class="text-slate-700 leading-snug">${reply.text}</p>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function handleSendForumReply(e) {
+      e.preventDefault();
+      const input = document.getElementById("forumReplyInput");
+      const text = input.value.trim();
+      if(!text || !state.activeForumThreadId) return;
+
+      const post = state.forumPosts.find(p => p.id === state.activeForumThreadId);
+      if(post) {
+        post.replies.push({
+          author: state.userProfile.name,
+          text: text,
+          time: "Just now"
+        });
+        renderForumComments(post);
+        renderForumPosts();
+        input.value = "";
+      }
+    }
+
+    // AI MATCH ENGINE CALCULATION LOGIC
+    function calculateAllAIMatchScores() {
+      const userSkills = state.userProfile.skills;
+
+      state.opportunities.forEach(opp => {
+        let matches = opp.requiredSkills.filter(s => userSkills.includes(s)).length;
+        let baseScore = 75 + (matches / opp.requiredSkills.length) * 23;
+        opp.matchScore = Math.min(99, Math.round(baseScore));
+      });
+
+      state.youthOrgs.forEach(org => {
+        let matches = org.requiredSkills.filter(s => userSkills.includes(s)).length;
+        let baseScore = 75 + (matches / org.requiredSkills.length) * 24;
+        org.matchScore = Math.min(99, Math.round(baseScore));
+      });
+
+      // Update Hero Match Highlights
+      const highestScore = Math.max(...state.opportunities.map(o => o.matchScore));
+      document.getElementById("heroMatchPercentage").innerText = `${highestScore}%`;
+      document.getElementById("heroMatchedSkillsTags").innerHTML = userSkills.slice(0, 3).map(s => `
+        <span class="bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] px-2 py-0.5 rounded">${s}</span>
+      `).join('');
+    }
+
+    function setupAISkillsCheckboxes() {
+      const container = document.getElementById("aiSkillsCheckboxes");
+      container.innerHTML = state.availableSkills.map(skill => {
+        const isChecked = state.userProfile.skills.includes(skill);
+        return `
+          <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border ${isChecked ? 'bg-purple-50 border-purple-300 text-purple-900 font-bold' : 'bg-slate-50 border-slate-200 text-slate-700'} text-xs cursor-pointer">
+            <input type="checkbox" value="${skill}" ${isChecked ? 'checked' : ''} onchange="toggleSkillSelection('${skill}')" class="rounded text-purple-600 focus:ring-purple-500">
+            <span>${skill}</span>
+          </label>
+        `;
+      }).join('');
+    }
+
+    function toggleSkillSelection(skill) {
+      const idx = state.userProfile.skills.indexOf(skill);
+      if(idx > -1) {
+        if(state.userProfile.skills.length > 1) state.userProfile.skills.splice(idx, 1);
+      } else {
+        state.userProfile.skills.push(skill);
+      }
+      setupAISkillsCheckboxes();
+    }
+
+    function handleRecalculateAIMatches(e) {
+      e.preventDefault();
+      state.userProfile.eduStatus = document.getElementById("aiEduStatus").value;
+      calculateAllAIMatchScores();
+      renderOpportunities("ALL");
+      renderYouthOrgs();
+      closeAIMatcherModal();
+      alert(`AI Match Engine Updated!\nNew Scores Recalculated Based on ${state.userProfile.skills.length} Selected Competencies.`);
+    }
+
+    function openAIMatchAnalyzerModal(title, category, score, skillsJson) {
+      const skills = JSON.parse(skillsJson);
+      document.getElementById("analyzerItemTitle").innerText = title;
+      document.getElementById("analyzerItemCategory").innerText = category;
+      document.getElementById("analyzerScoreDisplay").innerText = `${score}%`;
+
+      const matchedList = document.getElementById("analyzerSkillsList");
+      matchedList.innerHTML = skills.map(skill => {
+        const isMatched = state.userProfile.skills.includes(skill);
+        return `
+          <div class="flex items-center justify-between text-[11px]">
+            <span class="font-medium text-slate-700">${skill}</span>
+            <span class="${isMatched ? 'text-emerald-600 font-bold' : 'text-slate-400 italic'}">
+              ${isMatched ? '<i class="fa-solid fa-check-circle mr-1"></i> Matched' : 'Suggested Competency'}
+            </span>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById("aiMatchAnalyzerModal").classList.remove("hidden");
+    }
+
+    function closeAIMatchAnalyzerModal() {
+      document.getElementById("aiMatchAnalyzerModal").classList.add("hidden");
+    }
+
+    function openAIMatcherModal() {
+      document.getElementById("aiMatcherModal").classList.remove("hidden");
+    }
+
+    function closeAIMatcherModal() {
+      document.getElementById("aiMatcherModal").classList.add("hidden");
+    }
+
+    // MAIN TAB SWITCHING ARCHITECTURE
+    function switchMainTab(tabId) {
+      document.querySelectorAll(".tab-view").forEach(view => view.classList.add("hidden"));
+      document.querySelectorAll(".nav-tab-btn").forEach(btn => {
+        btn.className = "nav-tab-btn px-3 py-2 rounded-xl hover:text-emerald-600 hover:bg-slate-100 transition";
+      });
+
+      const activeView = document.getElementById(`view-${tabId}`);
+      if(activeView) activeView.classList.remove("hidden");
+
+      const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+      if(activeBtn) activeBtn.className = "nav-tab-btn px-3 py-2 rounded-xl text-emerald-700 bg-emerald-50 transition font-bold";
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // RENDER OPPORTUNITIES GRID
+    function renderOpportunities(filterCategory = "ALL") {
+      const container = document.getElementById("opportunitiesContainer");
+      container.innerHTML = "";
+
+      const filtered = filterCategory === "ALL" 
+        ? state.opportunities 
+        : state.opportunities.filter(o => o.category === filterCategory);
+
+      filtered.forEach(opp => {
+        const isBookmarked = state.bookmarks.some(b => b.id === opp.id);
+        const card = document.createElement("div");
+        card.className = "glass-card rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between";
+        
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase ${getCategoryBadgeStyle(opp.category)}">
+                ${opp.category}
+              </span>
+              <div class="flex items-center gap-2">
+                <button onclick='openAIMatchAnalyzerModal("${opp.title.replace(/"/g, '&quot;')}", "${opp.category}", ${opp.matchScore}, ${JSON.stringify(JSON.stringify(opp.requiredSkills))})' class="bg-purple-100 hover:bg-purple-200 text-purple-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full flex items-center gap-1 border border-purple-200">
+                  <i class="fa-solid fa-wand-magic-sparkles text-purple-600"></i> ${opp.matchScore}% Match
+                </button>
+                <button onclick="toggleBookmark('${opp.id}')" class="text-slate-400 hover:text-amber-500 transition">
+                  <i class="${isBookmarked ? 'fa-solid text-amber-500' : 'fa-regular'} fa-bookmark text-base"></i>
+                </button>
+              </div>
+            </div>
+            
+            <h3 class="font-bold text-slate-900 text-lg mb-1 leading-snug">${opp.title}</h3>
+            <p class="text-xs text-slate-500 mb-3"><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>${opp.location}</p>
+            <p class="text-xs text-slate-600 mb-4 leading-relaxed">${opp.description}</p>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between text-xs pt-3 border-t border-slate-100 mb-4">
+              <span class="text-slate-500"><i class="fa-regular fa-clock mr-1"></i>Due: ${opp.deadline}</span>
+              <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">Verified Grant</span>
+            </div>
+            <button onclick="openAppModal('${opp.id}')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2.5 rounded-xl transition shadow-sm flex items-center justify-center gap-2">
+              <i class="fa-solid fa-paper-plane"></i> Apply Now
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function getCategoryBadgeStyle(cat) {
+      switch(cat) {
+        case "SCHOLARSHIP": return "bg-emerald-100 text-emerald-800";
+        case "INTERNSHIP": return "bg-cyan-100 text-cyan-800";
+        case "SEMINAR": return "bg-purple-100 text-purple-800";
+        default: return "bg-slate-100 text-slate-800";
+      }
+    }
+
+    function filterOpportunities(cat) {
+      document.querySelectorAll(".opp-filter-btn").forEach(btn => {
+        if(btn.dataset.cat === cat) {
+          btn.className = "opp-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-sm transition";
+        } else {
+          btn.className = "opp-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition";
+        }
+      });
+      renderOpportunities(cat);
+    }
+
+    // RENDER MENTORS ROSTER
+    function renderMentors() {
+      const container = document.getElementById("mentorsContainer");
+      container.innerHTML = "";
+
+      state.mentors.forEach(m => {
+        const card = document.createElement("div");
+        card.className = "glass-card rounded-2xl p-5 border border-slate-200 shadow-sm flex items-center justify-between gap-4";
+        card.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-slate-900 to-emerald-700 text-white font-extrabold flex items-center justify-center text-sm shadow">
+              ${m.avatar}
+            </div>
+            <div>
+              <h4 class="font-bold text-slate-900 text-sm leading-tight">${m.name}</h4>
+              <span class="block text-[10px] font-bold text-emerald-600 mt-0.5">${m.role}</span>
+              <span class="text-[10px] text-slate-500">${m.focus}</span>
+            </div>
+          </div>
+          <button onclick="openMentorChatDrawer('${m.name}')" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-3 py-2 rounded-xl transition shrink-0">
+            Chat
+          </button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // RENDER YOUTH ORGS GRID
+    function renderYouthOrgs() {
+      const container = document.getElementById("youthOrgsContainer");
+      container.innerHTML = "";
+
+      state.youthOrgs.forEach(org => {
+        const card = document.createElement("div");
+        card.className = "glass-card rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between";
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white font-extrabold flex items-center justify-center text-sm shadow">
+                ${org.acronym.substring(0, 3)}
+              </div>
+              <button onclick='openAIMatchAnalyzerModal("${org.name.replace(/"/g, '&quot;')}", "Youth Organization", ${org.matchScore}, ${JSON.stringify(JSON.stringify(org.requiredSkills))})' class="bg-purple-100 text-purple-800 text-[10px] font-extrabold px-2.5 py-1 rounded-full flex items-center gap-1 border border-purple-200">
+                <i class="fa-solid fa-wand-magic-sparkles text-purple-600"></i> ${org.matchScore}% Match
+              </button>
+            </div>
+
+            <h3 class="font-bold text-slate-900 text-lg leading-tight mb-1">${org.name}</h3>
+            <span class="inline-block text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded mb-3">${org.focus}</span>
+            <p class="text-xs text-slate-600 mb-4 leading-relaxed">${org.description}</p>
+          </div>
+
+          <div>
+            <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2 mb-3">
+              <span class="text-[10px] font-semibold text-slate-400">${org.members}</span>
+              <span class="text-[10px] text-emerald-600 font-bold">Accredited Org</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <button onclick="openOrgAppModal('${org.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2 rounded-xl transition text-center">
+                Apply to Join
+              </button>
+              <button onclick="openMentorChatDrawer('${org.name}')" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold py-2 rounded-xl transition flex items-center justify-center gap-1">
+                <i class="fa-regular fa-comments text-amber-400"></i> Chat Org
+              </button>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // RENDER USER APPLICATIONS STATUS PORTAL
+    function renderUserApplications() {
+      const container = document.getElementById("userApplicationsList");
+      document.getElementById("navAppBadgeCount").innerText = state.userApplications.length;
+
+      if(state.userApplications.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8">You have not submitted any applications yet.</p>`;
+        return;
+      }
+
+      container.innerHTML = "";
+      state.userApplications.forEach(app => {
+        const item = document.createElement("div");
+        item.className = "p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-slate-50 transition";
+        item.innerHTML = `
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-slate-900 text-sm">${app.oppTitle}</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded ${getAppStatusStyle(app.status)}">${app.status}</span>
+            </div>
+            <p class="text-[11px] text-slate-500 mt-0.5">Ref ID: <span class="font-mono">${app.id}</span> • Submitted: ${app.dateSubmitted}</p>
+            <p class="text-[11px] text-emerald-700 font-medium mt-1"><i class="fa-solid fa-paperclip mr-1"></i> Attached: ${app.attachmentName}</p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            ${app.status === 'PENDING' ? `
+              <button onclick="cancelUserApplication('${app.id}')" class="text-xs text-rose-600 hover:underline font-bold">Withdraw App</button>
+            ` : `<span class="text-xs text-slate-400 italic">Review Complete</span>`}
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function cancelUserApplication(id) {
+      if(confirm("Are you sure you want to withdraw this application?")) {
+        state.userApplications = state.userApplications.filter(a => a.id !== id);
+        renderUserApplications();
+        renderAdminPendingApps();
+      }
+    }
+
+    // APPLICATION MODALS LOGIC
+    function openAppModal(oppId) {
+      const opp = state.opportunities.find(o => o.id === oppId);
+      if(!opp) return;
+
+      document.getElementById("appOppId").value = opp.id;
+      document.getElementById("modalOppTitle").innerText = opp.title;
+      document.getElementById("modalOppCategory").innerText = `${opp.category} • ${opp.location}`;
+      document.getElementById("applicationModal").classList.remove("hidden");
+    }
+
+    function closeAppModal() {
+      document.getElementById("applicationModal").classList.add("hidden");
+      removeAttachment();
+    }
+
+    function openOrgAppModal(orgId) {
+      const org = state.youthOrgs.find(o => o.id === orgId);
+      if(!org) return;
+
+      document.getElementById("orgModalId").value = org.id;
+      document.getElementById("orgModalTitle").innerText = `Join ${org.name}`;
+      document.getElementById("orgModalFocus").innerText = `${org.focus} • Accredited Org`;
+      document.getElementById("orgAppModal").classList.remove("hidden");
+    }
+
+    function closeOrgAppModal() {
+      document.getElementById("orgAppModal").classList.add("hidden");
+    }
+
+    function handleFileSelect(event) {
+      const file = event.target.files[0];
+      if(file) {
+        state.selectedAttachment = file.name;
+        document.getElementById("fileNameDisplay").innerText = file.name;
+        document.getElementById("fileUploadPreview").classList.remove("hidden");
+      }
+    }
+
+    function removeAttachment() {
+      state.selectedAttachment = null;
+      document.getElementById("appAttachmentInput").value = "";
+      document.getElementById("fileUploadPreview").classList.add("hidden");
+    }
+
+    function submitOpportunityApplication(e) {
+      e.preventDefault();
+      const oppId = document.getElementById("appOppId").value;
+      const opp = state.opportunities.find(o => o.id === oppId);
+
+      const newApp = {
+        id: "APP-" + Math.floor(1000 + Math.random() * 9000),
+        applicantName: document.getElementById("appFullName").value,
+        oppTitle: opp ? opp.title : "General Application",
+        type: opp ? opp.category : "GRANT",
+        school: document.getElementById("appSchool").value,
+        attachmentName: state.selectedAttachment || "Requirement_Doc.pdf",
+        status: "PENDING",
+        dateSubmitted: "Just Now"
+      };
+
+      state.userApplications.unshift(newApp);
+      renderUserApplications();
+      renderAdminPendingApps();
+
+      alert(`Application Submitted Successfully!\nTracking Reference: ${newApp.id}\nYour document (${newApp.attachmentName}) has been sent to the Rizal LYDO Admin Queue.`);
+      closeAppModal();
+    }
+
+    function submitOrgMembershipApplication(e) {
+      e.preventDefault();
+      const orgId = document.getElementById("orgModalId").value;
+      const org = state.youthOrgs.find(o => o.id === orgId);
+
+      const newApp = {
+        id: "ORG-" + Math.floor(1000 + Math.random() * 9000),
+        applicantName: document.getElementById("orgAppName").value,
+        oppTitle: org ? `Membership: ${org.name}` : "Org Application",
+        type: "YOUTH_ORG",
+        school: "Rizal Youth Advocate",
+        attachmentName: "CV_Membership.pdf",
+        status: "PENDING",
+        dateSubmitted: "Just Now"
+      };
+
+      state.userApplications.unshift(newApp);
+      renderUserApplications();
+      renderAdminPendingApps();
+
+      alert(`Membership Application Sent to ${org ? org.name : 'Organization'}!\nTracking Reference: ${newApp.id}`);
+      closeOrgAppModal();
+    }
+
+    // ADMIN SECURITY LOCK & QUEUE
+    function handleAdminAccess() {
+      if(state.adminUnlocked) {
+        document.getElementById("adminPortalModal").classList.remove("hidden");
+      } else {
+        document.getElementById("adminLockModal").classList.remove("hidden");
+      }
+    }
+
+    function closeAdminLockModal() {
+      document.getElementById("adminLockModal").classList.add("hidden");
+    }
+
+    function verifyAdminPasscode(e) {
+      e.preventDefault();
+      const input = document.getElementById("adminPasswordInput").value;
+      if(input === state.adminPasscode) {
+        state.adminUnlocked = true;
+        closeAdminLockModal();
+        document.getElementById("adminLockIcon").className = "fa-solid fa-lock-open text-xs text-emerald-400";
+        document.getElementById("adminPortalModal").classList.remove("hidden");
+        alert("Admin Access Granted! Welcome to Rizal LYDO Control Hub.");
+      } else {
+        alert("Incorrect Password! Access Denied.");
+      }
+    }
+
+    function closeAdminPortalModal() {
+      document.getElementById("adminPortalModal").classList.add("hidden");
+    }
+
+    function renderAdminPendingApps() {
+      const tbody = document.getElementById("adminAppsTableBody");
+      document.getElementById("pendingAppsCount").innerText = state.userApplications.filter(a => a.status === 'PENDING').length;
+
+      tbody.innerHTML = "";
+      if(state.userApplications.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400">No applications in queue.</td></tr>`;
+        return;
+      }
+
+      state.userApplications.forEach(app => {
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-slate-50 transition";
+        tr.innerHTML = `
+          <td class="p-3.5">
+            <div class="font-bold text-slate-900">${app.applicantName}</div>
+            <div class="text-[10px] text-slate-500">${app.school}</div>
+          </td>
+          <td class="p-3.5 font-medium text-slate-800">${app.oppTitle}</td>
+          <td class="p-3.5">
+            <button onclick="viewAttachment('${app.attachmentName}')" class="text-emerald-700 hover:text-emerald-900 font-semibold text-[11px] flex items-center gap-1 bg-emerald-50 px-2 py-1 rounded border border-emerald-200">
+              <i class="fa-solid fa-file-arrow-down"></i> ${app.attachmentName}
+            </button>
+          </td>
+          <td class="p-3.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${getAppStatusStyle(app.status)}">${app.status}</span>
+          </td>
+          <td class="p-3.5 text-right space-x-1">
+            ${app.status === 'PENDING' ? `
+              <button onclick="updateAppStatus('${app.id}', 'APPROVED')" class="bg-emerald-600 text-white text-[10px] font-bold px-2.5 py-1 rounded hover:bg-emerald-700 transition">Approve</button>
+              <button onclick="updateAppStatus('${app.id}', 'REJECTED')" class="bg-rose-600 text-white text-[10px] font-bold px-2.5 py-1 rounded hover:bg-rose-700 transition">Reject</button>
+            ` : `<span class="text-[10px] text-slate-400 italic">Reviewed</span>`}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function getAppStatusStyle(status) {
+      if(status === 'APPROVED') return 'bg-emerald-100 text-emerald-800';
+      if(status === 'REJECTED') return 'bg-rose-100 text-rose-800';
+      return 'bg-amber-100 text-amber-800';
+    }
+
+    function updateAppStatus(id, newStatus) {
+      const app = state.userApplications.find(a => a.id === id);
+      if(app) {
+        app.status = newStatus;
+        renderAdminPendingApps();
+        renderUserApplications();
+      }
+    }
+
+    function viewAttachment(fileName) {
+      alert(`Simulated File Preview:\nFile Name: ${fileName}\nStatus: Attached & Verified for Rizal LYDO Review.`);
+    }
+
+    function openPostCreationModal() {
+      document.getElementById("adminPostCreateModal").classList.remove("hidden");
+    }
+
+    function closePostCreationModal() {
+      document.getElementById("adminPostCreateModal").classList.add("hidden");
+    }
+
+    function handleCreateNewPost(e) {
+      e.preventDefault();
+      const category = document.getElementById("postCategorySelect").value;
+      const title = document.getElementById("postTitleInput").value;
+      const location = document.getElementById("postLocationInput").value;
+      const deadline = document.getElementById("postDeadlineInput").value;
+      const desc = document.getElementById("postDescriptionInput").value;
+
+      if(category === 'YOUTH_ORG') {
+        state.youthOrgs.unshift({
+          id: "org-" + Date.now(),
+          name: title,
+          acronym: title.substring(0, 3).toUpperCase(),
+          focus: "Local Youth Advocates",
+          description: desc,
+          members: "Active Group",
+          requiredSkills: ["Youth Leadership"],
+          matchScore: 95
+        });
+        renderYouthOrgs();
+      } else {
+        state.opportunities.unshift({
+          id: "opp-" + Date.now(),
+          title: title,
+          category: category,
+          location: location,
+          deadline: deadline,
+          description: desc,
+          requiredSkills: ["Youth Leadership"],
+          matchScore: 95
+        });
+        renderOpportunities("ALL");
+      }
+
+      alert("New Listing Published Successfully under Rizal LYDO!");
+      closePostCreationModal();
+    }
+
+    // DIFFERENTIATED MENTOR CHAT DRAWER
+    function openMentorChatDrawer(name) {
+      document.getElementById("chatTargetName").innerText = name;
+      
+      const mentor = state.mentors.find(m => m.name === name);
+      const greetingBox = document.getElementById("chatInitialGreeting");
+      
+      if(mentor) {
+        greetingBox.innerText = mentor.greeting;
+      } else {
+        greetingBox.innerText = `Mabuhay! Welcome to the official channel for ${name}. How can we guide your youth engagement in Rizal?`;
+      }
+
+      document.getElementById("mentorChatDrawer").classList.remove("translate-x-full");
+    }
+
+    function closeMentorChatDrawer() {
+      document.getElementById("mentorChatDrawer").classList.add("translate-x-full");
+    }
+
+    function handleSendMentorChat(e) {
+      e.preventDefault();
+      const input = document.getElementById("mentorChatInput");
+      const msg = input.value.trim();
+      if(!msg) return;
+
+      const chatBox = document.getElementById("mentorChatMessages");
+      
+      const userDiv = document.createElement("div");
+      userDiv.className = "bg-slate-900 text-white p-3 rounded-2xl rounded-tr-none max-w-[85%] ml-auto font-medium";
+      userDiv.innerText = msg;
+      chatBox.appendChild(userDiv);
+
+      input.value = "";
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      setTimeout(() => {
+        const autoDiv = document.createElement("div");
+        autoDiv.className = "bg-emerald-100 text-emerald-900 p-3 rounded-2xl rounded-tl-none max-w-[85%] font-medium";
+        autoDiv.innerText = `Thank you for reaching out regarding "${msg}". Our mentor team under Rizal LYDO will send you complete guidance!`;
+        chatBox.appendChild(autoDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 1000);
+    }
+
+    // TRAINING MODULE ACCESS
+    function openTrainingModal(courseName) {
+      alert(`Accessing Learning Portal:\nCourse: ${courseName}\nProgress Recorded under Rizal LYDO Skills Tracker.`);
+      let currentProgress = parseInt(document.getElementById("sssProgressBar").style.width) || 25;
+      if(currentProgress < 100) {
+        currentProgress += 25;
+        document.getElementById("sssProgressBar").style.width = currentProgress + "%";
+        document.getElementById("sssCourseProgressText").innerText = currentProgress + "% Completed";
+      }
+    }
+
+    // BOOKMARKS DRAWER
+    function toggleBookmark(oppId) {
+      const index = state.bookmarks.findIndex(b => b.id === oppId);
+      if(index > -1) {
+        state.bookmarks.splice(index, 1);
+      } else {
+        const opp = state.opportunities.find(o => o.id === oppId);
+        if(opp) state.bookmarks.push(opp);
+      }
+      renderOpportunities();
+      renderBookmarks();
+    }
+
+    function renderBookmarks() {
+      const container = document.getElementById("bookmarksContainer");
+      document.getElementById("bookmarkCountBadge").innerText = state.bookmarks.length;
+      container.innerHTML = "";
+
+      if(state.bookmarks.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">No saved items yet.</p>`;
+        return;
+      }
+
+      state.bookmarks.forEach(opp => {
+        const item = document.createElement("div");
+        item.className = "p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs flex justify-between items-center";
+        item.innerHTML = `
+          <div>
+            <h5 class="font-bold text-slate-800">${opp.title}</h5>
+            <span class="text-[10px] text-slate-500">${opp.category}</span>
+          </div>
+          <button onclick="toggleBookmark('${opp.id}')" class="text-rose-500 hover:text-rose-700 text-xs font-bold"><i class="fa-solid fa-trash"></i></button>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function toggleBookmarksDrawer() {
+      document.getElementById("bookmarksDrawer").classList.toggle("translate-x-full");
+    }
+
+    // PROFILE MODAL
+    function openProfileModal() {
+      document.getElementById("profileModal").classList.remove("hidden");
+    }
+
+    function closeProfileModal() {
+      document.getElementById("profileModal").classList.add("hidden");
+    }
+
+    function handleSaveProfile(e) {
+      e.preventDefault();
+      state.userProfile.name = document.getElementById("editProfileName").value;
+      state.userProfile.school = document.getElementById("editProfileSchool").value;
+      state.userProfile.degree = document.getElementById("editProfileDegree").value;
+
+      document.getElementById("navUserName").innerText = state.userProfile.name;
+      document.getElementById("heroProfileName").innerText = state.userProfile.name;
+      document.getElementById("heroProfileDegree").innerText = state.userProfile.degree;
+      document.getElementById("appFullName").value = state.userProfile.name;
+
+      closeProfileModal();
+      alert("Profile information updated!");
+    }
+
+    function registerForEvent(eventName) {
+      alert(`Event Registration Confirmed!\nYou are registered for "${eventName}". Confirmation details logged under Rizal LYDO.`);
+    }
+
+    function setStarRating(val) {
+      const stars = document.querySelectorAll("#starRating i");
+      stars.forEach((star, idx) => {
+        if(idx < val) star.className = "fa-solid fa-star text-amber-400";
+        else star.className = "fa-regular fa-star text-slate-300";
+      });
+      document.getElementById("starRatingText").innerText = `${val}.0 - Excellent`;
+    }
+
+    function handleFeedbackSubmit(e) {
+      e.preventDefault();
+      alert("Thank you! Your feedback has been recorded for the Rizal LYDO Municipal Youth Development Plan.");
+      document.getElementById("feedbackForm").reset();
+    }
+  </script>
+</body>
+</html>
